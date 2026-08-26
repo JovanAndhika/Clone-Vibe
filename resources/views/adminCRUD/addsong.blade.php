@@ -57,14 +57,14 @@
                 </div>
 
                 <div class="col-lg-7">
-                    <label for="chfile" class="form-label">Insert sample song file .mp3 (maks 1mb)</label>
+                    <label for="chfile" class="form-label">Insert sample song file .mp3 (maks 10mb)</label>
                     <input class="form-control" type="file" id="chfile" name="chfile">
                     <br>
                 </div>
 
                 {{-- music icon --}}
                 <div class="col-lg-7">
-                    <label for="icon" class="form-label">Icon Music (maks 1mb)</label>
+                    <label for="icon" class="form-label">Icon Music (maks 10mb)</label>
                     <img class="img-fluid img-preview mb-3 col-sm-5 rounded mx-auto" id="img-preview" style="display: none">
                     <input class="form-control" type="file" id="icon" name="icon" onchange="previewImage();">
 
@@ -89,24 +89,24 @@
 
         </div>
     </div>
-    
+
     <script>
         function previewImage() {
             // ambil input dan tag image
             const image = document.querySelector('#icon');
             const imagePreview = document.querySelector('#img-preview');
-            
+
             // jika file bukan gambar
             if (!image.files[0].type.match(/image-*/)) {
                 $('#icon-error').css('display', 'block');
                 image.value = '';
                 return;
             }
-            
+
             // jika file adalah gambar
             imagePreview.style.display = 'block';
             $('#icon-error').css('display', 'none');
-            
+
             // function untuk read file
             const oFReader = new FileReader();
             oFReader.readAsDataURL(image.files[0]);
@@ -116,3 +116,4 @@
         }
         </script>
 @endsection
+
