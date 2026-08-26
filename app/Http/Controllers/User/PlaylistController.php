@@ -2,27 +2,30 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
 use App\Models\Music;
 use App\Models\Music_playlist;
 use App\Models\Playlist;
 use Illuminate\Http\Request;
-use App\Models\PlaylistEntities;
-use App\Http\Controllers\Controller;
 
-class PlaylistController extends Controller {
-    public function getAllMusics() {
+class PlaylistController extends Controller
+{
+    public function getAllMusics()
+    {
         // jika ada request search
         $musics = collect([]);
         // cari data music berdasarkan judul
-        $musics = Music::where('title', 'LIKE', "%".request('search')."%")
-            ->orWhere('artist', 'LIKE', "%".request('search')."%")
+        $musics = Music::where('title', 'LIKE', '%'.request('search').'%')
+            ->orWhere('artist', 'LIKE', '%'.request('search').'%')
             ->orderBy('release_date', 'desc')
             ->take(10)
             ->get();
+
         return $musics->toArray();
     }
 
-    public function getAllPlaylist() {
+    public function getAllPlaylist()
+    {
         $music_id = request('music_id');
         $user_id = auth()->user()->id;
 
@@ -30,7 +33,7 @@ class PlaylistController extends Controller {
         $playlists = Playlist::where('user_id', $user_id)->get();
 
         // Add the 'is_added' attribute to each playlist
-        foreach($playlists as &$playlist) {
+        foreach ($playlists as &$playlist) {
             // Check if the current song is already in the playlist
             $is_added = Music_playlist::where('music_id', $music_id)
                 ->where('playlist_id', $playlist->id)
@@ -46,23 +49,26 @@ class PlaylistController extends Controller {
         return response()->json($playlistsArray);
     }
 
-    public function updateMusic() {
+    public function updateMusic()
+    {
         $music_id = request('music_id');
         $playlist_id = request('playlist_id');
         $is_added = request('is_added');
 
-        if($is_added == 'false') {
+        if ($is_added == 'false') {
             // jika sudah ada, maka hapus
             Music_playlist::where('music_id', $music_id)
                 ->where('playlist_id', $playlist_id)
                 ->delete();
+
             return response()->json(['message' => 'Successfully removed from playlist']);
         } else {
             // jika belum ada, maka tambahkan
             Music_playlist::create([
                 'music_id' => $music_id,
-                'playlist_id' => $playlist_id
+                'playlist_id' => $playlist_id,
             ]);
+
             return response()->json(['message' => 'Successfully added to playlist']);
         }
     }
@@ -70,13 +76,15 @@ class PlaylistController extends Controller {
     /**
      * Display a listing of the resource.
      */
-    public function index() {
+    public function index()
+    {
         // menambahkan variable first music cover ke dalam collection playlists
         $playlists = Playlist::where('user_id', auth()->user()->id)->get();
-        foreach($playlists as $playlist) {
+        foreach ($playlists as $playlist) {
             // jika merupakan liked music, hard code mengarah ke cover liked music
-            if($playlist->name == 'liked songs') {
+            if ($playlist->name == 'liked songs') {
                 $playlist->first_music_cover = 'img/liked-music.png';
+
                 continue;
             }
 
@@ -84,9 +92,9 @@ class PlaylistController extends Controller {
             $icon = null;
 
             // cek isi semua lagu
-            foreach($musics as $music) {
+            foreach ($musics as $music) {
                 // jika ada icon, maka jadikan icon
-                if($music->icon != null) {
+                if ($music->icon != null) {
                     $icon = $music->icon;
                     break;
                 }
@@ -96,27 +104,29 @@ class PlaylistController extends Controller {
             $playlist->first_music_cover = $icon;
         }
 
-        return view('user.library', [
-            "title" => "library",
-            "active" => "library",
-            "playlists" => $playlists
+        return view('user.playlist', [
+            'title' => 'playlist',
+            'active' => 'playlist',
+            'playlists' => $playlists,
         ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create() {
+    public function create()
+    {
         //
     }
 
     /**
      * Store a newly created resource in public.
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $request->validate([
             'playlist_name' => 'required|string|max:255',
-            'selected_songs' => 'required|string'
+            'selected_songs' => 'required|string',
         ]);
 
         // fetch data
@@ -126,7 +136,7 @@ class PlaylistController extends Controller {
         // create playlist
         $playlist = Playlist::create([
             'name' => $playlistName,
-            'user_id' => auth()->user()->id
+            'user_id' => auth()->user()->id,
         ]);
 
         // attach selected songs
@@ -138,28 +148,31 @@ class PlaylistController extends Controller {
     /**
      * Display the specified resource.
      */
-    public function show(Playlist $playlist) {
+    public function show(Playlist $playlist)
+    {
         return [
             'playlist' => $playlist,
-            'musics' => $playlist->musics
+            'musics' => $playlist->musics,
         ];
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Playlist $playlist) {
+    public function edit(Playlist $playlist)
+    {
         //
     }
 
     /**
      * Update the specified resource in public.
      */
-    public function update(Request $request, Playlist $playlist) {
+    public function update(Request $request, Playlist $playlist)
+    {
         // Validate
         $request->validate([
             'playlist_name' => 'required|string|max:255',
-            'selected_songs' => 'required|string'
+            'selected_songs' => 'required|string',
         ]);
 
         // Fetch data
@@ -177,12 +190,13 @@ class PlaylistController extends Controller {
         return redirect()->back()->with('success', 'Playlist updated successfully!');
     }
 
-
     /**
      * Remove the specified resource from public.
      */
-    public function destroy(Playlist $playlist) {
+    public function destroy(Playlist $playlist)
+    {
         $playlist->delete();
+
         return redirect()->back()->with('success', 'Playlist deleted successfully!');
     }
 }
