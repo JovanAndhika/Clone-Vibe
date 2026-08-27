@@ -56,7 +56,7 @@
                     class="bi bi-heart text-white @if ($active == 'like') active @endif"></i></a>
             <span>
                 <a class="nav-link text-white @if ($active == 'like') active @endif"
-                    href="{{ route('user.like') }}#jumphere">Library</a>
+                    href="{{ route('user.like') }}#jumphere">Likes</a>
             </span>
         </li>
 

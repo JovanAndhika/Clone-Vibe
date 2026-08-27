@@ -198,7 +198,7 @@ class UserController extends Controller
     public function destroyHistory(History $history)
     {
         // Pastikan history tersebut milik user yang sedang login
-        if ($history->user_id === auth()->user()->id) {
+        if ($history->user_id == auth()->user()->id) {
             $history->delete();
         }
 

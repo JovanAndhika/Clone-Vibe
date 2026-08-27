@@ -80,7 +80,7 @@
 
                 <!-- Email -->
                 <div class="mb-3">
-                    <label class="form-label">Email (admin@gmail.com / user@gmail.com)</label>
+                    <label class="form-label">Email (ketik: admin@gmail.com / user@gmail.com)</label>
                     <div class="input-group">
                         <button class="btn btn-outline-warning change" type="button">Email</button>
                         <input type="text" class="form-control" placeholder="Email" name="email" required>
@@ -92,7 +92,7 @@
 
                 <!-- Password -->
                 <div class="mb-3">
-                    <label class="form-label">Password (12345678)</label>
+                    <label class="form-label">Password (ketik: 12345678)</label>
                     <div class="input-group">
                         <button class="btn btn-outline-warning change" type="button">Password</button>
                         <input type="password" class="form-control" placeholder="Password" name="password" required>
