@@ -25,6 +25,7 @@ return new class extends Migration
             $table->date('release_date');
             $table->unsignedBigInteger('category_id')->default(1);
             $table->foreign('category_id')->references('id')->on('discoveries')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

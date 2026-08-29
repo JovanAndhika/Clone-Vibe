@@ -9,6 +9,11 @@ class Music extends Model
 {
     use HasFactory;
     protected $table = 'music';
+    protected $guarded = [
+        'id',
+        'created_at',
+        'updated_at'
+    ];
     protected $fillable = [
         'title',
         'artist',
@@ -20,8 +25,7 @@ class Music extends Model
         'file_public_id',
         'icon_public_id',
     ];
-    public $timestamps = false;
-    
+
 
     // untuk filter search
     // memanggil dengan Music::filter()

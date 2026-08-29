@@ -16,7 +16,7 @@ class AdminController extends Controller
     //Controller Admin
     public function index()
     {
-        $musics = Music::all();
+        $musics = Music::latest()->get();
         return view('adminCRUD.adminHome', ['musics' => $musics]);
     }
 
