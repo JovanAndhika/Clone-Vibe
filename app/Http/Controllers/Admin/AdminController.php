@@ -34,8 +34,8 @@ class AdminController extends Controller
             'title' => 'required',
             'artist' => 'required',
             'genre' => 'required',
-            'chfile' => 'required|file|mimes:mp3,wav,ogg|max:15000',
-            'icon' => 'nullable|image|file|max:15000',
+            'chfile' => 'required|file|mimes:mp3,wav,ogg|max:8000',
+            'icon' => 'nullable|image|file|max:8000',
             'release_date' => 'required|date',
         ]);
 

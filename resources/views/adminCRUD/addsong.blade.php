@@ -57,14 +57,14 @@
                 </div>
 
                 <div class="col-lg-7">
-                    <label for="chfile" class="form-label">Insert sample song file .mp3 (maks 10mb)</label>
+                    <label for="chfile" class="form-label">Insert sample song file .mp3 (maks 5mb)</label>
                     <input class="form-control" type="file" id="chfile" name="chfile">
                     <br>
                 </div>
 
                 {{-- music icon --}}
                 <div class="col-lg-7">
-                    <label for="icon" class="form-label">Icon Music (maks 10mb)</label>
+                    <label for="icon" class="form-label">Icon Music (maks 5mb)</label>
                     <img class="img-fluid img-preview mb-3 col-sm-5 rounded mx-auto" id="img-preview" style="display: none">
                     <input class="form-control" type="file" id="icon" name="icon" onchange="previewImage();">
 
